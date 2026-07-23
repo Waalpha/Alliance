@@ -1,0 +1,35 @@
+{
+  "entities": {
+    "projectConfig": {
+      "title": "Project Configuration",
+      "description": "Global config and data collections for the alliance portal",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "tagline": { "type": "string" },
+        "badge": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "refNumber": { "type": "string" },
+        "heroTitle": { "type": "string" },
+        "heroSubtitle": { "type": "string" },
+        "heroBadge": { "type": "string" },
+        "footerDescription": { "type": "string" },
+        "copyrightText": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "officeAddress": { "type": "string" },
+        "stats": { "type": "array" },
+        "signatories": { "type": "array" },
+        "objectives": { "type": "array" },
+        "collaboration": { "type": "array" },
+        "partners": { "type": "array" },
+        "governance": { "type": "array" },
+        "timeline": { "type": "array" },
+        "preambleClauses": { "type": "array" },
+        "governmentRoles": { "type": "array" },
+        "atsRoles": { "type": "array" }
+      },
+      "required": ["name", "refNumber"]
+    }
+  }
+}

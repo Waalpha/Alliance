@@ -1,0 +1,6 @@
+{
+  "name": "ATS-Kenya Portal",
+  "description": "Official portal for the strategic framework and partnership between the Government of Kenya and Alliance of Theological Schools - Kenya (ATS-Kenya).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
