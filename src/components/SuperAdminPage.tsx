@@ -42,7 +42,7 @@ import {
   User,
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
-import { useProject, ProjectConfig, DEFAULT_HERO_SLIDES } from '../context/ProjectContext';
+import { useProject, ProjectConfig, DEFAULT_HERO_SLIDES, fixImageUrl } from '../context/ProjectContext';
 import { Signatory, StatItem, ObjectiveItem, PartnerAgency, HeroSlide } from '../types';
 
 interface SuperAdminPageProps {
@@ -966,7 +966,7 @@ export const SuperAdminPage: React.FC<SuperAdminPageProps> = ({ onClose }) => {
                       badge: 'NEW ACCREDITED INITIATIVE',
                       title: 'New Hero Slide Title',
                       subtitle: 'Detailed description of the new initiative for member institutions.',
-                      image: '/src/assets/images/ats_hero_main_1784811196710.jpg',
+                      image: '/assets/images/ats_hero_main_1784811196710.jpg',
                     });
                     setActiveSlideIndex(currentHeroSlides.length);
                     showToast('New Hero slide added!');
@@ -1168,19 +1168,19 @@ export const SuperAdminPage: React.FC<SuperAdminPageProps> = ({ onClose }) => {
                               {[
                                 {
                                   name: 'ATS Main Building',
-                                  url: '/src/assets/images/ats_hero_main_1784811196710.jpg',
+                                  url: '/assets/images/ats_hero_main_1784811196710.jpg',
                                 },
                                 {
                                   name: 'ATS Campus View',
-                                  url: '/src/assets/images/ats_campus_view_1784811210823.jpg',
+                                  url: '/assets/images/ats_campus_view_1784811210823.jpg',
                                 },
                                 {
                                   name: 'ATS Theological Library',
-                                  url: '/src/assets/images/ats_library_hall_1784811226108.jpg',
+                                  url: '/assets/images/ats_library_hall_1784811226108.jpg',
                                 },
                                 {
                                   name: 'ATS Commencement Hall',
-                                  url: '/src/assets/images/ats_graduation_1784811239280.jpg',
+                                  url: '/assets/images/ats_graduation_1784811239280.jpg',
                                 },
                               ].map((imgPreset) => (
                                 <button
@@ -1206,7 +1206,7 @@ export const SuperAdminPage: React.FC<SuperAdminPageProps> = ({ onClose }) => {
                         <div className="relative rounded-xl overflow-hidden border-2 border-[#D5A52A]/40 aspect-video bg-black/40 flex items-center justify-center shadow-lg">
                           {selectedHeroSlide.image ? (
                             <img
-                              src={selectedHeroSlide.image}
+                              src={fixImageUrl(selectedHeroSlide.image)}
                               alt="Slide Preview"
                               className="w-full h-full object-cover"
                               referrerPolicy="no-referrer"

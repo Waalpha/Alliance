@@ -6,7 +6,7 @@ import {
   ChevronRight,
   Sparkles,
 } from 'lucide-react';
-import { useProject, DEFAULT_HERO_SLIDES } from '../context/ProjectContext';
+import { useProject, DEFAULT_HERO_SLIDES, fixImageUrl } from '../context/ProjectContext';
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
@@ -177,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
             }`}
           >
             <img
-              src={slide.image}
+              src={fixImageUrl(slide.image)}
               alt={slide.title}
               className="w-full h-full object-cover object-center filter contrast-100 brightness-100"
               referrerPolicy="no-referrer"
@@ -291,7 +291,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
                   aria-label={`Switch to photo ${idx + 1}`}
                 >
                   <img
-                    src={slide.image}
+                    src={fixImageUrl(slide.image)}
                     alt={slide.title}
                     className="w-16 h-10 sm:w-20 sm:h-12 object-cover"
                   />

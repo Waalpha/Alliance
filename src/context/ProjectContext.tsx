@@ -24,10 +24,21 @@ import {
   PREAMBLE_CLAUSES,
 } from '../data/mouData';
 
+export const fixImageUrl = (url?: string): string => {
+  if (!url) return '';
+  if (url.startsWith('/src/assets/images/')) {
+    return url.replace('/src/assets/images/', '/assets/images/');
+  }
+  if (url.startsWith('src/assets/images/')) {
+    return url.replace('src/assets/images/', '/assets/images/');
+  }
+  return url;
+};
+
 export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   {
     id: 0,
-    image: '/src/assets/images/ats_hero_main_1784811196710.jpg',
+    image: '/assets/images/ats_hero_main_1784811196710.jpg',
     badge: 'Republic of Kenya Official Institutional Alliance',
     title: 'HARMONIZING THEOLOGICAL EDUCATION FOR NATIONAL EXCELLENCE',
     subtitle:
@@ -35,7 +46,7 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 1,
-    image: '/src/assets/images/ats_campus_view_1784811210823.jpg',
+    image: '/assets/images/ats_campus_view_1784811210823.jpg',
     badge: 'ACCREDITATION & QUALIFICATION STANDARDS',
     title: 'Excellence in Theological Higher Education',
     subtitle:
@@ -43,7 +54,7 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 2,
-    image: '/src/assets/images/ats_library_hall_1784811226108.jpg',
+    image: '/assets/images/ats_library_hall_1784811226108.jpg',
     badge: 'RESEARCH, HERITAGE & ALLIANCE GOVERNANCE',
     title: 'Research, Shared Curricula & Capacity Building',
     subtitle:
@@ -51,7 +62,7 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 3,
-    image: '/src/assets/images/ats_graduation_1784811239280.jpg',
+    image: '/assets/images/ats_graduation_1784811239280.jpg',
     badge: 'NATIONAL RECOGNITION & GRADUATE EMPLOYABILITY',
     title: 'Empowering Graduates for Public & Community Leadership',
     subtitle:
@@ -181,17 +192,29 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const isLocalUpdateRef = useRef<boolean>(false);
   const attemptedSeedRef = useRef<boolean>(false);
 
+  const sanitizeConfig = (raw: ProjectConfig): ProjectConfig => {
+    if (!raw) return raw;
+    const heroSlides = (raw.heroSlides || DEFAULT_HERO_SLIDES).map((slide) => ({
+      ...slide,
+      image: fixImageUrl(slide.image),
+    }));
+    return {
+      ...raw,
+      heroSlides,
+    };
+  };
+
   const [config, setConfig] = useState<ProjectConfig>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        return { ...DEFAULT_CONFIG, ...parsed };
+        return sanitizeConfig({ ...DEFAULT_CONFIG, ...parsed });
       }
     } catch (e) {
       console.error('Failed to parse saved project config:', e);
     }
-    return DEFAULT_CONFIG;
+    return sanitizeConfig(DEFAULT_CONFIG);
   });
 
   // Listen to real-time updates from Firestore 'alliance' database
@@ -205,7 +228,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
         if (docSnap.exists()) {
           const remoteData = docSnap.data() as Partial<ProjectConfig>;
           if (!isLocalUpdateRef.current) {
-            setConfig((prev) => ({ ...prev, ...remoteData }));
+            setConfig((prev) => sanitizeConfig({ ...prev, ...remoteData }));
           } else {
             isLocalUpdateRef.current = false;
           }
