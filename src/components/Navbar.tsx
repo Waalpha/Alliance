@@ -152,101 +152,117 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             </div>
 
-            {/* Desktop Navigation Links - Dark Blue Words */}
-            <div className="hidden lg:flex items-center space-x-1.5">
-              {NAVIGATION_ITEMS.map((item) => {
-                const isActive = activeSection === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? 'text-white bg-[#0A4D8C] shadow-md dark:text-[#D4AF37] dark:bg-[#051A33] dark:border dark:border-[#D4AF37]/60'
-                        : 'text-[#0A4D8C] hover:text-[#051A33] hover:bg-slate-100 dark:text-gray-200 dark:hover:text-white dark:hover:bg-[#051A33]/60'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="hidden sm:flex items-center space-x-3">
-              <button
-                onClick={onOpenSuperAdmin}
-                className="inline-flex items-center space-x-1.5 bg-[#B51D28] hover:bg-red-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow-md border border-red-400/30 transition-all cursor-pointer hover:shadow-lg"
-              >
-                <Shield className="w-4 h-4" />
-                <span>Super Admin</span>
-              </button>
-            </div>
-
-            {/* Mobile Menu Toggle Button */}
-            <div className="flex lg:hidden items-center space-x-2">
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 text-[#0A4D8C] dark:text-[#D4AF37] hover:bg-slate-100 rounded-lg bg-slate-50 border border-slate-200 dark:bg-[#051A33] dark:border-[#D4AF37]/30"
-                aria-label="Toggle dark mode"
-              >
-                {darkMode ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-[#0A4D8C]" />}
-              </button>
-              <button
-                onClick={onOpenSearchModal}
-                className="p-2 text-[#0A4D8C] dark:text-[#D4AF37] hover:bg-slate-100 rounded-lg bg-slate-50 border border-slate-200 dark:bg-[#051A33] dark:border-[#D4AF37]/30"
-                aria-label="Search"
-              >
-                <Search className="w-4 h-4 text-[#0A4D8C] dark:text-[#D4AF37]" />
-              </button>
+            {/* Menu Dropdown Toggle Button for Computer & Mobile */}
+            <div className="flex items-center space-x-3">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg text-[#0A4D8C] dark:text-[#D4AF37] hover:bg-slate-100 bg-slate-50 border border-slate-200 dark:bg-[#051A33] dark:border-[#D4AF37]/30 focus:outline-none"
-                aria-label="Toggle navigation menu"
+                className={`inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shadow-md ${
+                  mobileMenuOpen
+                    ? 'bg-[#B51D28] text-white ring-2 ring-red-400'
+                    : 'bg-[#0A4D8C] hover:bg-[#083b6b] text-white dark:bg-[#051A33] dark:hover:bg-[#082a52] dark:text-[#D4AF37] dark:border dark:border-[#D4AF37]/50'
+                }`}
+                aria-label="Toggle Navigation Menu"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6 text-[#B51D28]" /> : <Menu className="w-6 h-6 text-[#0A4D8C] dark:text-[#D4AF37]" />}
+                {mobileMenuOpen ? (
+                  <>
+                    <X className="w-5 h-5" />
+                    <span className="uppercase tracking-wider">Close Menu</span>
+                  </>
+                ) : (
+                  <>
+                    <Menu className="w-5 h-5 text-[#D4AF37]" />
+                    <span className="uppercase tracking-wider">Menu</span>
+                  </>
+                )}
+              </button>
+
+              {/* Quick Super Admin Button on Desktop */}
+              <button
+                onClick={onOpenSuperAdmin}
+                className="hidden sm:inline-flex items-center space-x-1.5 bg-[#B51D28] hover:bg-red-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl shadow-md border border-red-400/30 transition-all cursor-pointer hover:shadow-lg"
+              >
+                <Shield className="w-4 h-4" />
+                <span className="hidden md:inline">Super Admin</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Global Navigation Dropdown Menu (Computer & Mobile) */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white dark:bg-[#051A33] border-b-2 border-[#0A4D8C] dark:border-[#D4AF37] px-4 pt-3 pb-6 space-y-2 max-h-[80vh] overflow-y-auto shadow-2xl">
-            <div className="text-xs font-bold text-[#0A4D8C] dark:text-[#D4AF37] uppercase tracking-wider px-2 pt-1 pb-2 border-b border-slate-200 dark:border-white/10">
-              Portal Directory Navigation
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-2">
-              {NAVIGATION_ITEMS.map((item) => {
-                const isActive = activeSection === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-bold text-left transition-colors cursor-pointer ${
-                      isActive
-                        ? 'bg-[#0A4D8C] text-white border-l-4 border-[#D4AF37] shadow-sm'
-                        : 'text-[#0A4D8C] dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-[#0A4D8C]/50'
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <ChevronRight className="w-3.5 h-3.5 opacity-60" />
-                  </button>
-                );
-              })}
-            </div>
+          <div className="bg-white dark:bg-[#051A33] border-b-2 border-[#0A4D8C] dark:border-[#D4AF37] px-4 sm:px-8 pt-4 pb-6 shadow-2xl transition-all duration-300">
+            <div className="max-w-7xl mx-auto space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/10">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 rounded-full bg-[#08783D]"></div>
+                  <span className="text-xs font-extrabold text-[#0A4D8C] dark:text-[#D4AF37] uppercase tracking-wider">
+                    Portal Framework Navigation Menu
+                  </span>
+                </div>
+                <span className="text-[11px] text-gray-500 dark:text-gray-400 font-medium hidden sm:inline">
+                  Select any section to jump directly
+                </span>
+              </div>
 
-            <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex flex-col space-y-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenSuperAdmin();
-                }}
-                className="w-full flex items-center justify-center space-x-2 bg-[#B51D28] text-white py-2.5 px-4 rounded-lg text-xs font-bold shadow"
-              >
-                <Shield className="w-4 h-4" />
-                <span>Open Super Admin Dashboard</span>
-              </button>
+              {/* Grid of Navigation Sections for Desktop & Mobile */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
+                {NAVIGATION_ITEMS.map((item) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleNavClick(item.id)}
+                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold text-left transition-all duration-200 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#0A4D8C] text-white ring-2 ring-[#D4AF37] shadow-lg transform scale-[1.02]'
+                          : 'bg-slate-50 hover:bg-slate-100 text-[#0A4D8C] border border-slate-200 dark:bg-[#031021] dark:text-gray-200 dark:border-slate-800 dark:hover:bg-[#0A4D8C]/40 dark:hover:text-white'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronRight
+                        className={`w-4 h-4 transition-transform ${
+                          isActive ? 'text-[#D4AF37] translate-x-1' : 'opacity-40'
+                        }`}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Dropdown Quick Tools Bar */}
+              <div className="pt-3 border-t border-slate-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenSearchModal();
+                    }}
+                    className="inline-flex items-center space-x-1.5 text-[#0A4D8C] dark:text-[#D4AF37] font-bold bg-slate-100 dark:bg-[#031021] hover:bg-slate-200 dark:hover:bg-[#0A4D8C]/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 transition-colors"
+                  >
+                    <Search className="w-3.5 h-3.5" />
+                    <span>Search Portal Records</span>
+                  </button>
+
+                  <button
+                    onClick={toggleDarkMode}
+                    className="inline-flex items-center space-x-1.5 text-[#0A4D8C] dark:text-[#D4AF37] font-bold bg-slate-100 dark:bg-[#031021] hover:bg-slate-200 dark:hover:bg-[#0A4D8C]/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 transition-colors"
+                  >
+                    {darkMode ? <Sun className="w-3.5 h-3.5 text-amber-300" /> : <Moon className="w-3.5 h-3.5" />}
+                    <span>{darkMode ? 'Light Theme' : 'Dark Theme'}</span>
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenSuperAdmin();
+                  }}
+                  className="inline-flex items-center space-x-2 bg-[#B51D28] hover:bg-red-700 text-white py-2 px-4 rounded-lg font-bold shadow transition-colors"
+                >
+                  <Shield className="w-4 h-4" />
+                  <span>Super Admin Portal</span>
+                </button>
+              </div>
             </div>
           </div>
         )}

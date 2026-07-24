@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Compass,
-  CheckCircle2,
-  Building2,
-  GraduationCap,
-  ArrowRight,
-  ShieldCheck,
   Calendar,
-  Shield,
   ChevronLeft,
   ChevronRight,
   Sparkles,
@@ -283,39 +276,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
             {activeSlideData.subtitle}
           </motion.p>
 
-          {/* Action Buttons directly on hero slide */}
-          <motion.div
-            key={`actions-${safeCurrentIndex}`}
-            initial={anim.actions.initial}
-            animate={anim.actions.animate}
-            transition={anim.actions.transition}
-            className="flex flex-wrap items-center gap-4 pt-2"
-          >
-            <button
-              onClick={() => onNavigate('about')}
-              className="inline-flex items-center space-x-2 bg-[#D4AF37] hover:bg-[#b89428] text-[#051A33] font-bold text-sm px-6 py-3.5 rounded-lg shadow-xl transition-all transform hover:-translate-y-0.5 cursor-pointer"
-            >
-              <span>Explore Framework</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={() => onNavigate('collaboration')}
-              className="inline-flex items-center space-x-2 bg-[#08783D] hover:bg-[#066131] text-white font-semibold text-sm px-6 py-3.5 rounded-lg shadow-xl transition-all border border-emerald-400/40 cursor-pointer"
-            >
-              <Compass className="w-4 h-4 text-emerald-300" />
-              <span>Areas of Collaboration</span>
-            </button>
-
-            <button
-              onClick={onOpenSuperAdmin}
-              className="inline-flex items-center space-x-2 bg-[#B51D28] hover:bg-red-700 text-white font-bold text-sm px-5 py-3.5 rounded-lg border border-red-400/40 transition-all cursor-pointer shadow-xl"
-            >
-              <Shield className="w-4 h-4 text-white" />
-              <span>Super Admin Panel</span>
-            </button>
-          </motion.div>
-
           {/* Photo Slide Thumbnails & Pagination Indicators */}
           <div className="pt-8 border-t border-white/20 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
@@ -338,11 +298,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
                 </button>
               ))}
-            </div>
-
-            <div className="flex items-center space-x-2 text-xs text-gray-200 bg-[#031021]/60 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm">
-              <ShieldCheck className="w-4 h-4 text-[#08783D]" />
-              <span className="font-semibold">{config.name} Official Photo Gallery</span>
             </div>
           </div>
 
