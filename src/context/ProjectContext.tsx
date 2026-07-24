@@ -113,7 +113,7 @@ const DEFAULT_CONFIG: ProjectConfig = {
   name: 'ATS-KENYA',
   tagline: 'Theological Education Partnership',
   badge: 'PARTNERSHIP PORTAL',
-  logoUrl: '',
+  logoUrl: '/assets/images/ats_official_logo_1784915945721.jpg',
   refNumber: 'GoK/MoE/ATS-2026/001',
 
   heroTitle: 'HARMONIZING THEOLOGICAL EDUCATION FOR NATIONAL EXCELLENCE',
@@ -198,8 +198,10 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
       ...slide,
       image: fixImageUrl(slide.image),
     }));
+    const logoUrl = fixImageUrl(raw.logoUrl) || '/assets/images/ats_official_logo_1784915945721.jpg';
     return {
       ...raw,
+      logoUrl,
       heroSlides,
     };
   };
@@ -216,6 +218,22 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
     return sanitizeConfig(DEFAULT_CONFIG);
   });
+
+  // Synchronize document title & browser favicon dynamically with config logo
+  useEffect(() => {
+    if (config.name) {
+      document.title = `${config.name} Portal | Theological Education Partnership`;
+    }
+    const faviconHref = fixImageUrl(config.logoUrl) || '/assets/images/ats_official_logo_1784915945721.jpg';
+    let faviconLink = document.getElementById('app-favicon') as HTMLLinkElement | null;
+    if (!faviconLink) {
+      faviconLink = document.createElement('link');
+      faviconLink.id = 'app-favicon';
+      faviconLink.rel = 'icon';
+      document.head.appendChild(faviconLink);
+    }
+    faviconLink.href = faviconHref;
+  }, [config.logoUrl, config.name]);
 
   // Listen to real-time updates from Firestore 'alliance' database
   useEffect(() => {
