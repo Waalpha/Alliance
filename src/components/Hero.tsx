@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Calendar,
   ChevronLeft,
   ChevronRight,
   Sparkles,
@@ -227,29 +226,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-12 w-full py-8">
         <div className={`max-w-4xl space-y-6 ${getAlignClass(config.heroTextAlign)}`}>
           
-          {/* Top Official Badge & Motion Indicator */}
-          <motion.div
-            key={`badge-${safeCurrentIndex}`}
-            initial={anim.badge.initial}
-            animate={anim.badge.animate}
-            transition={anim.badge.transition}
-            className="flex flex-wrap items-center gap-3"
-          >
-            <div className="inline-flex items-center space-x-2 bg-[#0A4D8C]/90 border border-[#D4AF37]/80 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest text-[#D4AF37] shadow-xl backdrop-blur-md">
-              <Calendar className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="uppercase">{activeSlideData.badge}</span>
-            </div>
-
-            <div className="text-xs font-mono text-gray-200 bg-[#031021]/80 px-3 py-1 rounded-full border border-white/20 backdrop-blur-sm flex items-center space-x-1.5">
-              <span>Photo {safeCurrentIndex + 1} of {slides.length}</span>
-              <span className="text-[#D4AF37]">•</span>
-              <span className="text-[#D4AF37] text-[11px] font-semibold flex items-center space-x-1">
-                <Sparkles className="w-3 h-3" />
-                <span>{anim.motionLabel}</span>
-              </span>
-            </div>
-          </motion.div>
-
           {/* Main Title - Slides distinctly per slide */}
           <motion.h1
             key={`title-${safeCurrentIndex}`}
@@ -276,30 +252,23 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
             {activeSlideData.subtitle}
           </motion.p>
 
-          {/* Photo Slide Thumbnails & Pagination Indicators */}
-          <div className="pt-8 border-t border-white/20 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center space-x-3">
-              {slides.map((slide, idx) => (
+          {/* Clean minimal slide indicators */}
+          {slides.length > 1 && (
+            <div className="pt-6 border-t border-white/15 flex items-center space-x-2">
+              {slides.map((_, idx) => (
                 <button
-                  key={slide.id}
+                  key={idx}
                   onClick={() => setCurrentSlide(idx)}
-                  className={`group relative overflow-hidden rounded-lg border-2 transition-all cursor-pointer text-left ${
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     idx === currentSlide
-                      ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-105'
-                      : 'border-white/30 opacity-60 hover:opacity-100 hover:border-white'
+                      ? 'w-8 bg-[#D4AF37]'
+                      : 'w-2 bg-white/40 hover:bg-white/70'
                   }`}
-                  aria-label={`Switch to photo ${idx + 1}`}
-                >
-                  <img
-                    src={fixImageUrl(slide.image)}
-                    alt={slide.title}
-                    className="w-16 h-10 sm:w-20 sm:h-12 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                </button>
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
               ))}
             </div>
-          </div>
+          )}
 
         </div>
       </div>
