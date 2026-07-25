@@ -5,7 +5,7 @@ import {
   ChevronRight,
   Sparkles,
 } from 'lucide-react';
-import { useProject, DEFAULT_HERO_SLIDES, fixImageUrl } from '../context/ProjectContext';
+import { useProject, DEFAULT_HERO_SLIDES, fixImageUrl, HERO_IMAGE_PRESETS } from '../context/ProjectContext';
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
@@ -176,30 +176,29 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
             }`}
           >
             <img
-              src={fixImageUrl(slide.image)}
+              src={fixImageUrl(slide.image, index)}
               alt={slide.title}
               className="w-full h-full object-cover object-center filter contrast-100 brightness-100"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget;
+                const fallback = HERO_IMAGE_PRESETS[index % HERO_IMAGE_PRESETS.length];
+                if (target.src !== fallback) {
+                  target.src = fallback;
+                }
+              }}
             />
           </div>
         ))}
-        {/* Dynamic Gradient Overlays - automatically lightened when photo opacity is high */}
+        {/* Dynamic Gradient Overlays */}
         <div
           style={{ opacity: topGradientOpacity }}
-          className="absolute inset-0 bg-gradient-to-t from-[#031021] via-[#031021]/50 to-transparent transition-opacity duration-500"
+          className="absolute inset-0 bg-gradient-to-t from-[#031021] via-[#031021]/50 to-transparent transition-opacity duration-500 pointer-events-none"
         ></div>
         <div
           style={{ opacity: sideGradientOpacity }}
-          className="absolute inset-0 bg-gradient-to-r from-[#031021]/80 via-[#031021]/30 to-transparent transition-opacity duration-500"
+          className="absolute inset-0 bg-gradient-to-r from-[#031021]/80 via-[#031021]/30 to-transparent transition-opacity duration-500 pointer-events-none"
         ></div>
-
-        {/* AI Generated Image Tag Badge */}
-        <div className="absolute bottom-3 right-4 sm:right-8 bg-[#031021]/90 backdrop-blur-md text-gray-200 text-[10px] sm:text-xs px-3 py-1.5 rounded-full border border-[#D4AF37]/50 shadow-xl flex items-center space-x-1.5 z-20 pointer-events-none">
-          <Sparkles className="w-3 h-3 text-[#D4AF37] shrink-0" />
-          <span className="font-semibold text-white">AI Generated Image</span>
-          <span className="text-gray-400">•</span>
-          <span className="text-[#D4AF37] font-medium">Alliance of Theological Schools</span>
-        </div>
       </div>
 
       {/* Kenya Flag Accent Line */}

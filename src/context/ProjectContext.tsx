@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import heroImg1 from '../assets/images/ats_hero_national_alliance_1784979070148.jpg';
+import heroImg2 from '../assets/images/ats_campus_accreditation_1784979084196.jpg';
+import heroImg3 from '../assets/images/ats_theological_library_1784979096064.jpg';
+import heroImg4 from '../assets/images/ats_graduation_ceremony_1784979108024.jpg';
+import logoImg from '../assets/images/ats_official_logo_1784915945721.jpg';
 import {
   StatItem,
   ObjectiveItem,
@@ -24,8 +29,15 @@ import {
   PREAMBLE_CLAUSES,
 } from '../data/mouData';
 
-export const fixImageUrl = (url?: string): string => {
-  if (!url) return '';
+export const HERO_IMAGE_PRESETS = [heroImg1, heroImg2, heroImg3, heroImg4];
+
+export const fixImageUrl = (url?: string, defaultIndex: number = 0): string => {
+  if (!url) return HERO_IMAGE_PRESETS[defaultIndex % HERO_IMAGE_PRESETS.length] || heroImg1;
+  if (url.includes('ats_hero_national_alliance') || url.includes('ats_hero_main')) return heroImg1;
+  if (url.includes('ats_campus_accreditation') || url.includes('ats_campus_view')) return heroImg2;
+  if (url.includes('ats_theological_library') || url.includes('ats_library_hall')) return heroImg3;
+  if (url.includes('ats_graduation_ceremony') || url.includes('ats_graduation')) return heroImg4;
+  if (url.includes('ats_official_logo') || url.includes('logo')) return logoImg;
   if (url.startsWith('/src/assets/images/')) {
     return url.replace('/src/assets/images/', '/assets/images/');
   }
@@ -38,7 +50,7 @@ export const fixImageUrl = (url?: string): string => {
 export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   {
     id: 0,
-    image: '/assets/images/ats_hero_main_1784811196710.jpg',
+    image: heroImg1,
     badge: 'Republic of Kenya Official Institutional Alliance',
     title: 'HARMONIZING THEOLOGICAL EDUCATION FOR NATIONAL EXCELLENCE',
     subtitle:
@@ -46,7 +58,7 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 1,
-    image: '/assets/images/ats_campus_view_1784811210823.jpg',
+    image: heroImg2,
     badge: 'ACCREDITATION & QUALIFICATION STANDARDS',
     title: 'Excellence in Theological Higher Education',
     subtitle:
@@ -54,7 +66,7 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 2,
-    image: '/assets/images/ats_library_hall_1784811226108.jpg',
+    image: heroImg3,
     badge: 'RESEARCH, HERITAGE & ALLIANCE GOVERNANCE',
     title: 'Research, Shared Curricula & Capacity Building',
     subtitle:
@@ -62,7 +74,7 @@ export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: 3,
-    image: '/assets/images/ats_graduation_1784811239280.jpg',
+    image: heroImg4,
     badge: 'NATIONAL RECOGNITION & GRADUATE EMPLOYABILITY',
     title: 'Empowering Graduates for Public & Community Leadership',
     subtitle:
@@ -194,11 +206,11 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const sanitizeConfig = (raw: ProjectConfig): ProjectConfig => {
     if (!raw) return raw;
-    const heroSlides = (raw.heroSlides || DEFAULT_HERO_SLIDES).map((slide) => ({
+    const heroSlides = (raw.heroSlides || DEFAULT_HERO_SLIDES).map((slide, idx) => ({
       ...slide,
-      image: fixImageUrl(slide.image),
+      image: fixImageUrl(slide.image, idx),
     }));
-    const logoUrl = fixImageUrl(raw.logoUrl) || '/assets/images/ats_official_logo_1784915945721.jpg';
+    const logoUrl = fixImageUrl(raw.logoUrl) || logoImg;
     return {
       ...raw,
       logoUrl,
