@@ -201,12 +201,12 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
           className="absolute inset-0 bg-gradient-to-r from-[#031021]/80 via-[#031021]/30 to-transparent transition-opacity duration-500 pointer-events-none"
         ></div>
 
-        {/* Breakthrough College Official Photo Badge Overlay */}
+        {/* Breakthrough College Health Sciences Official Photo Badge Overlay */}
         <div className="absolute bottom-4 right-4 sm:right-8 bg-[#031021]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-xs font-medium text-white shadow-xl flex items-center space-x-2 z-20 pointer-events-none">
           <span className="w-2 h-2 rounded-full bg-[#08783D]"></span>
           <span className="text-[#D4AF37] font-bold tracking-wide">Breakthrough College</span>
           <span className="text-gray-400">•</span>
-          <span className="text-gray-200 text-[11px]">Campus & Research Facilities</span>
+          <span className="text-gray-200 text-[11px]">Health Sciences (Bermuda Blue Scrubs)</span>
         </div>
       </div>
 

@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import heroImg1 from '../assets/images/breakthrough_college_hero_1784981738302.jpg';
-import heroImg2 from '../assets/images/breakthrough_college_quad_1784981755902.jpg';
-import heroImg3 from '../assets/images/breakthrough_college_library_1784981767977.jpg';
-import heroImg4 from '../assets/images/breakthrough_college_graduation_1784981784096.jpg';
+import heroImg1 from '../assets/images/breakthrough_scrubs_hero_1784988351319.jpg';
+import heroImg2 from '../assets/images/breakthrough_scrubs_quad_1784988364995.jpg';
+import heroImg3 from '../assets/images/breakthrough_scrubs_lab_1784988381322.jpg';
+import heroImg4 from '../assets/images/breakthrough_scrubs_grad_1784988393881.jpg';
 import logoImg from '../assets/images/ats_official_logo_1784915945721.jpg';
 import {
   StatItem,
@@ -33,6 +33,10 @@ export const HERO_IMAGE_PRESETS = [heroImg1, heroImg2, heroImg3, heroImg4];
 
 export const fixImageUrl = (url?: string, defaultIndex: number = 0): string => {
   if (!url) return HERO_IMAGE_PRESETS[defaultIndex % HERO_IMAGE_PRESETS.length] || heroImg1;
+  if (url.includes('breakthrough_scrubs_hero')) return heroImg1;
+  if (url.includes('breakthrough_scrubs_quad')) return heroImg2;
+  if (url.includes('breakthrough_scrubs_lab')) return heroImg3;
+  if (url.includes('breakthrough_scrubs_grad')) return heroImg4;
   if (url.includes('breakthrough_college_hero')) return heroImg1;
   if (url.includes('breakthrough_college_quad')) return heroImg2;
   if (url.includes('breakthrough_college_library')) return heroImg3;

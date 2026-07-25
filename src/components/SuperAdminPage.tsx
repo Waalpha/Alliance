@@ -1167,20 +1167,20 @@ export const SuperAdminPage: React.FC<SuperAdminPageProps> = ({ onClose }) => {
                             <div className="grid grid-cols-2 gap-1.5">
                               {[
                                 {
-                                  name: 'Breakthrough College Main Hall',
-                                  url: '/assets/images/breakthrough_college_hero_1784981738302.jpg',
+                                  name: 'Health Sciences - Bermuda Blue Scrubs Main Hall',
+                                  url: '/assets/images/breakthrough_scrubs_hero_1784988351319.jpg',
                                 },
                                 {
-                                  name: 'Breakthrough College Quad',
-                                  url: '/assets/images/breakthrough_college_quad_1784981755902.jpg',
+                                  name: 'Health Sciences - Bermuda Blue Scrubs Quad',
+                                  url: '/assets/images/breakthrough_scrubs_quad_1784988364995.jpg',
                                 },
                                 {
-                                  name: 'Breakthrough College Library',
-                                  url: '/assets/images/breakthrough_college_library_1784981767977.jpg',
+                                  name: 'Health Sciences - Bermuda Blue Scrubs Lab & Library',
+                                  url: '/assets/images/breakthrough_scrubs_lab_1784988381322.jpg',
                                 },
                                 {
-                                  name: 'Breakthrough College Graduation',
-                                  url: '/assets/images/breakthrough_college_graduation_1784981784096.jpg',
+                                  name: 'Health Sciences - Bermuda Blue Scrubs Graduation',
+                                  url: '/assets/images/breakthrough_scrubs_grad_1784988393881.jpg',
                                 },
                               ].map((imgPreset) => (
                                 <button
