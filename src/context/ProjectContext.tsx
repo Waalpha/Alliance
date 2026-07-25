@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import heroImg1 from '../assets/images/ats_hero_national_alliance_1784979070148.jpg';
-import heroImg2 from '../assets/images/ats_campus_accreditation_1784979084196.jpg';
-import heroImg3 from '../assets/images/ats_theological_library_1784979096064.jpg';
-import heroImg4 from '../assets/images/ats_graduation_ceremony_1784979108024.jpg';
+import heroImg1 from '../assets/images/breakthrough_college_hero_1784981738302.jpg';
+import heroImg2 from '../assets/images/breakthrough_college_quad_1784981755902.jpg';
+import heroImg3 from '../assets/images/breakthrough_college_library_1784981767977.jpg';
+import heroImg4 from '../assets/images/breakthrough_college_graduation_1784981784096.jpg';
 import logoImg from '../assets/images/ats_official_logo_1784915945721.jpg';
 import {
   StatItem,
@@ -33,6 +33,10 @@ export const HERO_IMAGE_PRESETS = [heroImg1, heroImg2, heroImg3, heroImg4];
 
 export const fixImageUrl = (url?: string, defaultIndex: number = 0): string => {
   if (!url) return HERO_IMAGE_PRESETS[defaultIndex % HERO_IMAGE_PRESETS.length] || heroImg1;
+  if (url.includes('breakthrough_college_hero')) return heroImg1;
+  if (url.includes('breakthrough_college_quad')) return heroImg2;
+  if (url.includes('breakthrough_college_library')) return heroImg3;
+  if (url.includes('breakthrough_college_graduation')) return heroImg4;
   if (url.includes('ats_hero_national_alliance') || url.includes('ats_hero_main')) return heroImg1;
   if (url.includes('ats_campus_accreditation') || url.includes('ats_campus_view')) return heroImg2;
   if (url.includes('ats_theological_library') || url.includes('ats_library_hall')) return heroImg3;
@@ -206,15 +210,21 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const sanitizeConfig = (raw: ProjectConfig): ProjectConfig => {
     if (!raw) return raw;
-    const heroSlides = (raw.heroSlides || DEFAULT_HERO_SLIDES).map((slide, idx) => ({
+    const heroSlides = (raw.heroSlides && raw.heroSlides.length > 0 ? raw.heroSlides : DEFAULT_HERO_SLIDES).map((slide, idx) => ({
       ...slide,
+      id: slide.id ?? idx,
       image: fixImageUrl(slide.image, idx),
     }));
     const logoUrl = fixImageUrl(raw.logoUrl) || logoImg;
+    const heroPhotoOpacity =
+      typeof raw.heroPhotoOpacity === 'number' && raw.heroPhotoOpacity >= 0.3
+        ? raw.heroPhotoOpacity
+        : 0.7;
     return {
       ...raw,
       logoUrl,
       heroSlides,
+      heroPhotoOpacity,
     };
   };
 

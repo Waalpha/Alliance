@@ -16,6 +16,7 @@ import { Partners } from './components/Partners';
 import { Footer } from './components/Footer';
 import { SearchModal } from './components/SearchModal';
 import { SuperAdminPage } from './components/SuperAdminPage';
+import { BackToTop } from './components/BackToTop';
 
 function AppContent() {
   const [activeSection, setActiveSection] = useState<string>('hero');
@@ -151,6 +152,9 @@ function AppContent() {
         onClose={() => setIsSearchOpen(false)}
         onNavigateSection={handleNavigateSection}
       />
+
+      {/* Floating Back To Top Button */}
+      <BackToTop />
     </div>
   );
 }

@@ -1167,20 +1167,20 @@ export const SuperAdminPage: React.FC<SuperAdminPageProps> = ({ onClose }) => {
                             <div className="grid grid-cols-2 gap-1.5">
                               {[
                                 {
-                                  name: 'ATS National Alliance Hall',
-                                  url: '/assets/images/ats_hero_national_alliance_1784979070148.jpg',
+                                  name: 'Breakthrough College Main Hall',
+                                  url: '/assets/images/breakthrough_college_hero_1784981738302.jpg',
                                 },
                                 {
-                                  name: 'ATS Campus Quad',
-                                  url: '/assets/images/ats_campus_accreditation_1784979084196.jpg',
+                                  name: 'Breakthrough College Quad',
+                                  url: '/assets/images/breakthrough_college_quad_1784981755902.jpg',
                                 },
                                 {
-                                  name: 'ATS Theological Library',
-                                  url: '/assets/images/ats_theological_library_1784979096064.jpg',
+                                  name: 'Breakthrough College Library',
+                                  url: '/assets/images/breakthrough_college_library_1784981767977.jpg',
                                 },
                                 {
-                                  name: 'ATS Graduation Ceremony',
-                                  url: '/assets/images/ats_graduation_ceremony_1784979108024.jpg',
+                                  name: 'Breakthrough College Graduation',
+                                  url: '/assets/images/breakthrough_college_graduation_1784981784096.jpg',
                                 },
                               ].map((imgPreset) => (
                                 <button

@@ -151,12 +151,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
-  const photoOpacity = config.heroPhotoOpacity ?? 0.7;
+  const rawOpacity = config.heroPhotoOpacity ?? 0.7;
+  const photoOpacity = Math.max(0.55, Math.min(1.0, rawOpacity < 0.2 ? 0.75 : rawOpacity));
 
   // Compute dynamic gradient overlay strength based on photo opacity
   // When photo opacity is high (e.g. 0.8 - 1.0), overlay becomes lighter so photo is crystal clear
-  const topGradientOpacity = Math.max(0.1, 0.6 - (photoOpacity - 0.5) * 0.8);
-  const sideGradientOpacity = Math.max(0.15, 0.7 - (photoOpacity - 0.5) * 0.8);
+  const topGradientOpacity = Math.max(0.1, 0.5 - (photoOpacity - 0.5) * 0.7);
+  const sideGradientOpacity = Math.max(0.15, 0.6 - (photoOpacity - 0.5) * 0.7);
 
   return (
     <section
@@ -169,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
       <div className="absolute inset-0 z-0">
         {slides.map((slide, index) => (
           <div
-            key={slide.id}
+            key={slide.id ?? index}
             style={{ opacity: index === safeCurrentIndex ? photoOpacity : 0 }}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
               index === safeCurrentIndex ? 'scale-100' : 'scale-105 pointer-events-none'
@@ -178,7 +179,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
             <img
               src={fixImageUrl(slide.image, index)}
               alt={slide.title}
-              className="w-full h-full object-cover object-center filter contrast-100 brightness-100"
+              className="w-full h-full object-cover object-center filter contrast-105 brightness-95"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 const target = e.currentTarget;
@@ -199,6 +200,14 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenSuperAdmin }) => {
           style={{ opacity: sideGradientOpacity }}
           className="absolute inset-0 bg-gradient-to-r from-[#031021]/80 via-[#031021]/30 to-transparent transition-opacity duration-500 pointer-events-none"
         ></div>
+
+        {/* Breakthrough College Official Photo Badge Overlay */}
+        <div className="absolute bottom-4 right-4 sm:right-8 bg-[#031021]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 text-xs font-medium text-white shadow-xl flex items-center space-x-2 z-20 pointer-events-none">
+          <span className="w-2 h-2 rounded-full bg-[#08783D]"></span>
+          <span className="text-[#D4AF37] font-bold tracking-wide">Breakthrough College</span>
+          <span className="text-gray-400">•</span>
+          <span className="text-gray-200 text-[11px]">Campus & Research Facilities</span>
+        </div>
       </div>
 
       {/* Kenya Flag Accent Line */}
